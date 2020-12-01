@@ -116,7 +116,6 @@ def findThreeNums (expenses, target):
             j = -1
             pivot = pivot + 1
             count = 0
-
         
         elif expenses[i] + expenses[j] + expenses[pivot] == target:
             return (expenses[i], expenses[j], expenses[pivot])
