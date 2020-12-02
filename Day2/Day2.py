@@ -86,12 +86,21 @@ def checker(protocol, passwords):
     second_lst = [first_lst[0]] + first_lst[1].split(' ')
     #separate all the meaningful things. we only want 1 3 and a
     i = 0
-    while i < len(passwords):
-        check = inBounds(passwords[i], int(second_lst[0]), int(second_lst[1]), second_lst[2])
-        count = count + check #check returns a 0 or 1 if the password follows protocol
-        i = i + 1
+
+    if type(passwords) == type(None):
+        return count
+    
+    for password in passwords:
+        if (inBounds(password, int(second_lst[0]), int(second_lst[1]), second_lst[2])) == 1:
+            count = count + 1
+    return count
+
+    #while i < len(passwords):
+     #   check = inBounds(passwords[i], int(second_lst[0]), int(second_lst[1]), second_lst[2])
+      #  count = count + check #check returns a 0 or 1 if the password follows protocol
+       # i = i + 1
         
-    return count #count is the number of passwords that follow protocol
+   # return count #count is the number of passwords that follow protocol
     
     
 def totalSuccessfulPasswords(passworddict):
@@ -102,11 +111,11 @@ def totalSuccessfulPasswords(passworddict):
                                 
         
         
-        
     
-        
+    
+      
 d = {'8-11 t': [' tttttttcttm', 'wdwd', 'ttttttttttttttttttttt', 'tttttttt', 't'], '8-12 t': [' ttttadawdawdcttm', 'tttttttt']}
-
+totalTest = totalSuccessfulPasswords(d)
 
 #if i run totalSuccessfulPasswords(convertToDict2(protocolAndPasswords(passwords))), i get an error saying cant check len of a NoneType
 def count(dic): #this will count the values (passwords) that arent lists... but they are all lists
