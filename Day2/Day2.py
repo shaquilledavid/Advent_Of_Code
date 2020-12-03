@@ -20,6 +20,10 @@ nine c, both within the limits of their respective policies.
 How many passwords are valid according to their policies?
 """
 
+#NOTE. WORKING SOLUTION NEAR THE BOTTOM OF FILE.
+#directly below was my first attempt in which I overcomplicated things.
+
+
 #Today is a bit trickier. First I would
 #make them all strings and input these into a list
 #Then I will convert the list to a dictionary
@@ -188,7 +192,7 @@ def newPolicy(position1, position2, letter, password):
     if password[position2 - 1] == letter:
         count = count + 1
 
-    if count == 1:
+    if count == 1: #meaning that it is a valid password
         return 1
     
     else:
