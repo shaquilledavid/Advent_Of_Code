@@ -133,8 +133,7 @@ def isSuccessful(line):
     second_lst = [first_lst[0]] + first_lst[1].split(' ') # separate at the whitespaces -> ['6', '10', 'p:', 'ctpppjmdpppppp']
 
     return checker2(int(second_lst[0]), int(second_lst[1]), second_lst[2].strip(':'), second_lst[3])
-    #call helper function
-    
+    #call helper function. notice the third parameter calls strip again. this is to get rid of the colon
     
 
 def checker2(lower, upper, letter, password):
