@@ -83,7 +83,7 @@ def multiplyExpenses (expenses):
     return (expenses[0]*expenses[1])
 
 
-print("The answer to my PART A of my puzzle is " + str(multiplyExpenses(findTwoNums(expenses, 2020))))
+print("The answer to PART A of my puzzle is " + str(multiplyExpenses(findTwoNums(expenses, 2020))))
 
 
 """ Part Two
@@ -123,4 +123,4 @@ def findThreeNums (expenses, target):
 def multiplyExpenses2 (expenses):
     return (expenses[0]*expenses[1]*expenses[2])
 
-print("The answer to my PART B of my puzzle is " + str(multiplyExpenses2(findThreeNums(expenses, 2020))))
+print("The answer to PART B of my puzzle is " + str(multiplyExpenses2(findThreeNums(expenses, 2020))))
