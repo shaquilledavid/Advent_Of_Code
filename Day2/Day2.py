@@ -109,18 +109,58 @@ def totalSuccessfulPasswords(passworddict):
         total = total + checker(protocol, d.get(protocol))
     return total
                                 
-        
-        
-    
-    
+          
       
-d = {'8-11 t': [' tttttttcttm', 'wdwd', 'ttttttttttttttttttttt', 'tttttttt', 't'], '8-12 t': [' ttttadawdawdcttm', 'tttttttt']}
+d = {'8-11 t': [' tttttttcttm', 'wdwd', 'ttttttttttttttttttttt', 'tttttttt', 't'],
+     '8-12 t': [' ttttadawdawdcttm', 'tttttttt']}
 totalTest = totalSuccessfulPasswords(d)
 
-#if i run totalSuccessfulPasswords(convertToDict2(protocolAndPasswords(passwords))), i get an error saying cant check len of a NoneType
-def count(dic): #this will count the values (passwords) that arent lists... but they are all lists
-	c = 0
-	for key in dic:
-		if (type(dic.get(key))) != (type([])):
-			c = c+1
-	return c
+
+"""------------------------------------------------------------------------------------------------
+------------------------------------WORKING SOLUTION--------------------------------------------"""
+
+
+#So basically, I thought about it in the single case. Read the first line from the text doc
+# 6-10 p: ctpppjmdpppppp
+# 6 is my lower bound, 10 is upper, p is the letter, then the password. I need to separate these
+# Use split and list concatenation to do this.
+
+def isSuccessful(line):
+    """ This function will return if the password is a successful password according to
+        the protocol"""
+    
+    first_lst = line.split('-') #separate the lower bound -> ['6', '10 p: ctpppjmdpppppp']
+    second_lst = [first_lst[0]] + first_lst[1].split(' ') # separate at the whitespaces -> ['6', '10', 'p:', 'ctpppjmdpppppp']
+
+    return checker2(int(second_lst[0]), int(second_lst[1]), second_lst[2].strip(':'), second_lst[3])
+    #call helper function
+    
+    
+
+def checker2(lower, upper, letter, password):
+    """This function will return a 1 if the password is successful
+        or a 0 if it is not."""
+    count = 0 # number of times the letter occurs
+    
+    for char in password:
+        if char == letter:
+            count = count + 1
+
+    if (count >= lower) and (count <= upper):
+        return 1 
+
+    else:
+        return 0
+
+# lastly, check every line of the text file. I have already put every line into a list by doing passwords = [str(x.strip()) for x in passwords]
+
+goodPasswords = 0
+index = 0
+
+while index < len(passwords):
+	goodPasswords = goodPasswords + isSuccessful(passwords[index]) #total + result of this line
+	index = index + 1
+
+
+print("The answer to PART A of my puzzle is " + str(goodPasswords))
+#493
