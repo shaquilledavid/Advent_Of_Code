@@ -24,7 +24,7 @@ Count the number of valid passports - those that have all required fields.Treat 
 as optional. In your batch file, how many passports are valid?
 """
 
-#wanna write a function to read lines in the file
+#need to write a function to read lines in the file
 #put the elements in a list. if the line = \n, make new list
 
 with open("passports.txt") as f:
