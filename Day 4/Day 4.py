@@ -20,8 +20,6 @@ separated by spaces or newlines. Passports are separated by blank lines.
 
 Missing cid is fine, but missing any other field is not, so this passport is invalid.
 
-According to the above rules, your improved system would report 2 valid passports.
-
 Count the number of valid passports - those that have all required fields.Treat cid
 as optional. In your batch file, how many passports are valid?
 """
