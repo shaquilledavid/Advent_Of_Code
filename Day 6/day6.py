@@ -62,3 +62,53 @@ for group in p:
     sumOfCounts = sumOfCounts + uniqueYes(group)
 
 print("The answer to PART A of my puzzle is " + str(sumOfCounts))
+
+
+"""--- Part Two ---
+As you finish the last group's customs declaration, you notice that you misread
+one word in the instructions:
+
+You don't need to identify the questions to which anyone answered "yes";
+you need to identify the questions to which everyone answered "yes"!
+
+For each group, count the number of questions to which everyone answered "yes".
+What is the sum of those counts?"""
+
+#['necytxmlfhsu', 'uecosjvlhpmk']
+
+def allYesQuestions(lst):
+    yesQuestions = []
+    i = 0
+    while i < len(lst):
+        for question in lst[i]:
+            if yesQuestionHelper(question, lst) == 1 and (question not in yesQuestions):
+                yesQuestions.append(question)
+            else:
+                pass
+        i = i + 1
+    return len(yesQuestions)
+
+def yesQuestionHelper(letter, lst):
+    """ Return 1 if letter is in EVERY element of the list"""
+    i = 0
+    while i < len(lst):
+        if letter in lst[i]:
+            i = i + 1
+        else:
+            return 0
+    return 1
+
+#clean up p list -> remove all ''. This would hinder our method
+for group in p:
+	for answer in group:
+		if answer == '':
+			group.remove(answer)
+
+
+sumOfCounts2 = 0
+for group in p:
+    sumOfCounts2 = sumOfCounts2 + allYesQuestions(group)
+
+print("The answer to PART B of my puzzle is " + str(sumOfCounts2))
+
+
