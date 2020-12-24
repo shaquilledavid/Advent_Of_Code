@@ -78,6 +78,86 @@ def accumulatorBeforeLoop(instructions):
                 i = i + 1
 
 print("The answer to PART A of my puzzle is " + str(accumulatorBeforeLoop(ins)))
-            
 
+"""--- Part Two ---
+Somewhere in the program, either a jmp is supposed to be a nop, or a nop is
+supposed to be a jmp. (No acc instructions were harmed in the corruption of
+this boot code.)
+
+Fix the program so that it terminates normally by changing exactly one jmp
+(to nop) or nop (to jmp). What is the value of the accumulator after the
+program terminates?
+"""
+
+#We can approach this situation by changing each nop/jmp one at a time
+#but i think this approach is the longest, most taxing approach (brute force)
+
+
+#alter the accumulator function from part A so we can see the indices in a global variable
+def accumulatorBeforeLoop2(instructions):
+    accumulator = 0
+    i = 0
+    ind = []
+
+    while i < len(instructions):
+        
+        if i in ind:
+            return 'change did not work'
+        
+        if i not in ind:
+            ind.append(i)
+            
+        if instructions[i][0] == 'acc':
+            accumulator = accumulator + int(instructions[i][1])
+            i = i + 1
+
+        else:
+            if instructions[i][0] == 'jmp':
+                i = i + int(instructions[i][1])
+            elif instructions[i][0] == 'nop':
+                i = i + 1
+                
+    return accumulator
+
+
+
+def changeNop(instructions):
+    accu = []
+    i = 0
+    copy_instructions = instructions
+    
+    while i < len(instructions):
+        if instructions[i][0] == 'nop':
+            instructions[i][0] = 'jmp'
+            if accumulatorBeforeLoop2(instructions) == 'change did not work':
+                instructions[i][0] = 'nop' #change it back
+                i = i + 1
+            elif accumulatorBeforeLoop2(instructions) != 'change did not work':
+                                        return accumulatorBeforeLoop2(instructions)
+        i = i + 1
+        
+    return 'changing the nops are useless'
+            
+def changeJmp(instructions):
+    accu = []
+    i = 0
+    copy_instructions = instructions
+    
+    while i < len(instructions):
+        if instructions[i][0] == 'jmp':
+            instructions[i][0] = 'nop'
+            if accumulatorBeforeLoop2(instructions) == 'change did not work':
+                instructions[i][0] = 'jmp'
+                i = i + 1
+            elif accumulatorBeforeLoop2(instructions) != 'change did not work':
+                                        return accumulatorBeforeLoop2(instructions)
+        i = i + 1
+        
+    return 'changing the jmps are useless'    
+    
+if changeNop(ins) == 'changing the nops are useless':
+    print("The answer to PART B of my puzzle is " + str(changeJmp(ins)) + ", by changing a single jmp instruction")
+
+else:
+    print("The answer to PART B of my puzzle is " + str(changeNop(ins)) + ", by changing a single nop instruction")
     
