@@ -20,6 +20,11 @@ with open("directions.txt") as f:
 dirs = [str(x.strip()) for x in directions]
 compass = ['n', 'e', 's', 'w']*1000
 
+
+
+# For this puzzle, instead of doing it the way I normally do (with list comprehension and using functions),
+# I decided to work with Classes and Objects.
+
 class Ship:
 
     def __init__(self, n, s, e, w, current_dir):
