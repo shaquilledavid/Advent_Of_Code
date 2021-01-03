@@ -48,3 +48,37 @@ def findDifference(lst):
            
 print("The answer to PART A of my puzzle is " + str(t20thNumber(myinput)))
 #763
+
+"""--- Part Two ---
+Impressed, the Elves issue you a challenge: determine the 30000000th number
+spoken.
+Given your starting numbers, what will be the 30000000th number spoken?
+"""
+myinput2 = [0,14,1,3,7,9]
+
+def thirtyMillNumber(startingnums):
+    lst = startingnums
+    i = len(startingnums) #turn number
+
+    while i < 30000000:
+        if lst[-1] not in lst[:-1]:
+            lst.append(0)
+            i = i + 1
+        elif lst[-1] in lst[:-1]:
+            newnum = findDifference(lst)
+            lst.append(newnum)
+            i = i + 1
+            
+    return lst[-1]
+
+def detectLoopInList(lst):
+    half = len(lst)//2
+    first_half = lst[:half]
+    second_half = lst[half:]
+
+    if first_half == second_half:
+        return True
+
+print("The answer to PART B of my puzzle is " + str(1876406))    
+#1876406, with the help of another person's code. My approach to part B using my solution from part A would take long to compute.
+
