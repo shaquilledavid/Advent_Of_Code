@@ -100,3 +100,77 @@ while index < len(ins):
 
 #now, the memory_addresses dictionary contains all the masked values applied to respective addresses. any overwriting will be automatically done as python's dictionary data structure takes care of that
 print("The answer to PART A of my puzzle is " + str(sum(memory_addresses.values())))
+#7611244640053
+
+"""--- Part Two ---
+For some reason, the sea port's computer system still can't communicate with your
+ferry's docking program. It must be using version 2 of the decoder chip!
+
+A version 2 decoder chip doesn't modify the values being written at all. Instead, it
+acts as a memory address decoder. Immediately before a value is written to memory,
+each bit in the bitmask modifies the corresponding bit of the destination memory address
+in the following way:
+
+If the bitmask bit is 0, the corresponding memory address bit is unchanged.
+If the bitmask bit is 1, the corresponding memory address bit is overwritten with 1.
+If the bitmask bit is X, the corresponding memory address bit is floating.
+A floating bit is not connected to anything and instead fluctuates unpredictably. In
+practice, this means the floating bits will take on all possible values, potentially
+causing many memory addresses to be written all at once!
+
+Execute the initialization program using an emulator for a version 2 decoder chip.
+What is the sum of all values left in memory after it completes?
+"""
+
+def maskAddress(mask, addr):
+    binary = changeToBinary(addr)
+    temp_lst = []
+    i = 0
+    while i < len(mask):
+        if mask[i] == '1':
+            temp_lst.append(mask[i])
+            i = i + 1
+            
+        elif mask[i] == 'X':
+            temp_lst.append(mask[i])
+            i = i + 1
+        else:
+            temp_lst.append(binary[i])
+            i = i + 1
+            
+    return ''.join([str(elem) for elem in temp_lst])
+
+
+#last semester, I learned about the ambiguous operator in Racket, -<, and sought a way to do so in python
+#it turns out that using "yield from" is uses the same idea
+#https://www.reddit.com/r/adventofcode/comments/kcr1ct/2020_day_14_solutions/gfsj0cd/?utm_source=reddit&utm_medium=web2x&context=3
+#https://stackoverflow.com/questions/9708902/in-practice-what-are-the-main-uses-for-the-new-yield-from-syntax-in-python-3
+def generator(addr_mask):
+    if 'X' in addr_mask:
+        for r in ('0', '1'):
+            yield from generator(addr_mask.replace('X', r, 1))
+    else:
+        yield addr_mask
+
+part2dict = {}
+
+def applyMaskedAddrToDict(mask, address, value, dictionary):
+    """Apply the mask operation to the value and insert it into the dictionary"""
+    x = maskAddress(mask, address)
+    lst = []
+    for i in generator(x):              #generate all the possbile addresses from the masking
+        lst.append(binaryToNumber(i))   #didn't necessarily need to change to an int
+        
+    for addr in lst:                    #for each generated address, add it as a key with the intended value
+        dictionary[addr] = value 
+
+    return dictionary
+
+index1 = 0
+while index1 < len(ins):
+    for mem in ins[index1+1]:
+        applyMaskedAddrToDict(ins[index1][7:], int(mem.split(']')[0][4:]), int(mem.split(' = ')[1]), part2dict)
+    index1 = index1 + 2
+
+print("The answer to PART B of my puzzle is " + str(sum(part2dict.values())))
+#3705162613854
